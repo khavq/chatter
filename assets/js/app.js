@@ -11,5 +11,6 @@ import "../css/app.scss"
 //
 //     import {Socket} from "phoenix"
 import socket from "./socket"
+import "./chat_room"
 //
 import "phoenix_html"

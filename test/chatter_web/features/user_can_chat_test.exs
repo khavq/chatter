@@ -3,27 +3,31 @@ defmodule ChatterWeb.UserCanChatTest do
 
   test "user can chat with anothers successfully", %{metadata: metadata} do
     room = insert(:chat_room)
+    user1 = build(:user) |> set_password("password") |> insert()
+    user2 = build(:user) |> set_password("password") |> insert()
 
-    user =
+    session1 =
       metadata
-      |> new_user()
+      |> new_session()
       |> visit(rooms_index())
+      |> sign_in(as: user1)
       |> join_room(room.name)
 
-    another_user =
+    session2 =
       metadata
-      |> new_user()
+      |> new_session()
       |> visit(rooms_index())
+      |> sign_in(as: user2)
       |> join_room(room.name)
 
-    user
+    session1
     |> send_message("Hi everyone")
 
-    another_user
+    session2
     |> assert_has(message("Hi everyone"))
     |> send_message("Hi, welcome to #{room.name}")
 
-    user
+    session1
     |> assert_has(message("Hi, welcome to #{room.name}"))
 
   end
@@ -32,9 +36,9 @@ defmodule ChatterWeb.UserCanChatTest do
     Query.data("role", "message", text: message)
   end
 
-  defp new_user(metadata) do
-    {:ok, user} = Wallaby.start_session(metadata: metadata)
-    user
+  defp new_session(metadata) do
+    {:ok, session} = Wallaby.start_session(metadata: metadata)
+    session
   end
 
   def send_message(session, message) do

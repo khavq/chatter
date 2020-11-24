@@ -1,5 +1,6 @@
 defmodule ChatterWeb.Router do
   use ChatterWeb, :router
+  alias ChatterWeb.Plugs
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -7,6 +8,7 @@ defmodule ChatterWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Doorman.Login.Session
   end
 
   pipeline :api do
@@ -15,6 +17,12 @@ defmodule ChatterWeb.Router do
 
   scope "/", ChatterWeb do
     pipe_through :browser
+    get "/sign_in", SessionController, :new
+    resources "/sessions", SessionController, only: [:create]
+  end
+
+  scope "/", ChatterWeb do
+    pipe_through [:browser, Plugs.RequireLogin]
 
     get "/", ChatRoomController, :index
     resources "/chat_rooms", ChatRoomController, only: [:create, :new, :show]
