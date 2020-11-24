@@ -9,9 +9,8 @@ defmodule Chatter.Factory do
 
   def user_factory do
     %Chatter.User{
-      email: sequence(:email, &"super#{&1}@example.com"),
-      password: "password1"
-    }
+      email: sequence(:email, &"super#{&1}@example.com")
+    } |> set_password("password1")
   end
 
   def set_password(user, password) do

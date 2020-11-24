@@ -3,7 +3,7 @@ defmodule ChatterWeb.UserVisitsRoomsPageTest do
 
   test "user visits room pages and see a list of rooms", %{ session: session } do
     [room1, room2] = insert_pair(:chat_room)
-    user = build(:user) |> set_password("superpassword") |> insert()
+    user = insert(:user)
 
     session
     |> visit(rooms_index)
