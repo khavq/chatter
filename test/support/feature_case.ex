@@ -18,7 +18,8 @@ defmodule ChatterWeb.FeatureCase do
     end
 
     metadata = Phoenix.Ecto.SQL.Sandbox.metadata_for(Chatter.Repo, self())
+
     {:ok, session} = Wallaby.start_session(metadata: metadata)
-    {:ok, session: session}
+    {:ok, session: session, metadata: metadata}
   end
 end
