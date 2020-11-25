@@ -33,7 +33,4 @@ config :doorman,
   secure_with: Doorman.Auth.Bcrypt,
   user_module: Chatter.User
 
-config :wallaby,
-  hackney_options: [timeout: :infinity, recv_timeout: :infinity]
-
 import_config "#{Mix.env()}.exs"

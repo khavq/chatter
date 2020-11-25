@@ -1,4 +1,4 @@
-defmodule ChatterWeb.GuestSignUpTest do
+defmodule ChatterWeb.GuestSignsUpTest do
   use ChatterWeb.FeatureCase, async: true
 
   test "guest sign up with email and password", %{session: session} do

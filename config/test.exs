@@ -20,6 +20,7 @@ config :chatter, ChatterWeb.Endpoint,
 
 config :chatter, :sql_sandbox, true
 config :wallaby, driver: Wallaby.Chrome
-
+config :wallaby,
+  hackney_options: [timeout: :infinity, recv_timeout: :infinity]
 # Print only warnings and errors during test
 config :logger, level: :warn

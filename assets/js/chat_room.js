@@ -18,7 +18,8 @@ if (chatRoomTitle) {
   channel.on("new_message", payload => {
     let messageItem = document.createElement("li")
     messageItem.dataset.role = "message"
-    messageItem.innerText = payload.body
+    const message_text = `${payload.author}: ${payload.body}`
+    messageItem.innerText = message_text
     messagesContainer.appendChild(messageItem)
   })
 
